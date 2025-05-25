@@ -4,14 +4,15 @@ import os
 
 def calculate_score(achievements : dict):
     result : int = 0
-    steamUserStats = ISteamUserStats(steam_api_key=os.environ["SteamKey"])
+    steamUserStats = ISteamUserStats(steam_api_key=os.environ["STEAM_API_TOKEN"])
     for entry in achievements.keys():
         globalPercentage = steamUserStats.get_global_achievement_percentages_for_app(entry)["achievementpercentages"]["achievements"]
         for achievement in globalPercentage:
             if achievement["name"] in achievements[entry]:
-                percentage = achievement["percent"]
+                percentage = float(achievement["percent"])
+                print(percentage)
                 name = achievement["name"]
                 print(f"{name} has been achieved by {percentage}% of players")
                 result += (100 - percentage)
     
-    return result
+    return int(result)

@@ -1,5 +1,6 @@
-from userReg import UserRegistration
-from score_calculator import calculate_score
+from core.userReg import UserRegistration
+from core.score_calculator import calculate_score
+
 class Hunter:
 
     name : str

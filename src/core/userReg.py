@@ -1,6 +1,6 @@
 import os
 import steam_web_api as SteamAPI
-from dotenv import load_dotenv
+import time
 
 class UserRegistration:
 
@@ -11,8 +11,7 @@ class UserRegistration:
     users : SteamAPI.Users
 
     def __init__(self):
-        load_dotenv()
-        self.KEY = os.getenv("SteamKey")
+        self.KEY = os.getenv("STEAM_API_TOKEN")
         self.steam = SteamAPI.Steam(self.KEY)
         self.client = SteamAPI.Client(self.KEY)
         self.apps = SteamAPI.Apps(self.client)
@@ -30,8 +29,8 @@ class UserRegistration:
         except Exception as e:
             e.with_traceback(None)
 
-    def request_user_achievements(self, user_id : str):
-        user = self.steam.users.search_user(user_id)
+    def request_user_achievements(self, steam_id : str):
+        user = self.steam.users.search_user(steam_id)
         if(user == "No Match") : 
             print("Wrong User ID")
             return
@@ -48,6 +47,7 @@ class UserRegistration:
             if(achievements is None): continue
             unlocked_achievements = self._get_achievements_of_game(achievements)
             user_achievements_per_game_dict[game["appid"]] = unlocked_achievements
+            time.sleep(1)
         return user_achievements_per_game_dict
 
 
