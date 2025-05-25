@@ -1,6 +1,6 @@
 from typing import List
 import os
-from user import Hunter
+from core.user import Hunter
 import pickle
 
 
